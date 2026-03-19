@@ -159,3 +159,67 @@ GND  -> GND
 IN1  -> D7
 SGND -> (already bridged to GND on module)
 
+
+## 🔌 Wiring (Pin Connections)
+
+### Arduino Uno
+
+#### BME280 (I2C)
+VCC  -> 3.3V  
+GND  -> GND  
+SDA  -> A4  
+SCL  -> A5  
+
+#### Light Sensor (RobotDyn)
+VCC  -> 5V  
+GND  -> GND  
+AOut -> A0  
+DOut -> (not used)  
+
+#### Relay Module (4-channel, using IN1)
+VCC  -> 5V  
+GND  -> GND  
+IN1  -> D7  
+SGND -> (bridged to GND on module)  
+
+---
+
+## 🧠 Logic Levels
+
+Relay behavior (this module):
+- HIGH → ON (relay active)
+- LOW  → OFF
+
+---
+
+## ⚠️ Notes
+
+### Power
+- BME280: use 3.3V (recommended)
+- Light sensor + relay: use 5V
+
+### Ground
+All components must share common ground:
+
+Arduino GND ↔ BME GND ↔ Light GND ↔ Relay GND
+
+### Light Sensor Behavior
+- Dark → higher values (~500–600)
+- Light → lower values (~90–150)
+- Values are normalized in code to 0–100%
+
+---
+
+## 🧭 Simplified Diagram
+    +-------------------+
+    |    Arduino Uno    |
+    |-------------------|
+    | A4 (SDA) ---------|---- BME280
+    | A5 (SCL) ---------|
+    | A0 ---------------|---- Light sensor (AOut)
+    | D7 ---------------|---- Relay IN1
+    | 5V ---------------|---- VCC (Light, Relay)
+    | 3.3V -------------|---- VCC (BME280)
+    | GND --------------|---- GND (all)
+    +-------------------+
+
