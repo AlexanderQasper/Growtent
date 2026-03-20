@@ -6,7 +6,6 @@ void readSensors();
 
 float getTemperature();
 float getHumidity();
-float getPressure();
 int getLightRaw();
 int getLightPercent();
 

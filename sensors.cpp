@@ -1,34 +1,29 @@
 #include "sensors.h"
 
 #include <Arduino.h>
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
+#include <SHT1x.h>
 
+// -------------------- Pins --------------------
+static const uint8_t SHT_DATA_PIN = 3;
+static const uint8_t SHT_CLOCK_PIN = 2;
 static const uint8_t LIGHT_PIN = A0;
-static const uint8_t BME_ADDRESS = 0x76;
 
-static Adafruit_BME280 bme;
+// -------------------- Sensor objects --------------------
+static SHT1x sht(SHT_DATA_PIN, SHT_CLOCK_PIN);
 
+// -------------------- Stored values --------------------
 static float airTemp = 0.0f;
 static float airHum = 0.0f;
-static float airPress = 0.0f;
 static int lightRaw = 0;
 static int lightPercent = 0;
 
 void setupSensors() {
-  if (!bme.begin(BME_ADDRESS)) {
-    Serial.println("ERROR: BME280 not found");
-    while (1) {
-      delay(100);
-    }
-  }
+  // Для SHT1x отдельная инициализация не нужна
 }
 
 void readSensors() {
-  airTemp = bme.readTemperature();
-  airHum = bme.readHumidity();
-  airPress = bme.readPressure() / 100.0f;
+  airTemp = sht.readTemperatureC();
+  airHum = sht.readHumidity();
 
   lightRaw = analogRead(LIGHT_PIN);
 
@@ -44,10 +39,6 @@ float getTemperature() {
 
 float getHumidity() {
   return airHum;
-}
-
-float getPressure() {
-  return airPress;
 }
 
 int getLightRaw() {

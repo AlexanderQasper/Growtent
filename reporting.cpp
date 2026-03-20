@@ -1,8 +1,8 @@
 #include "reporting.h"
-#include "actuators.h"
 
 #include <Arduino.h>
 #include "sensors.h"
+#include "actuators.h"
 
 static unsigned long lastReportMs = 0;
 static const unsigned long REPORT_INTERVAL_MS = 2000;
@@ -29,9 +29,7 @@ void reportState() {
   Serial.print(getTemperature());
   Serial.print(" C | Hum: ");
   Serial.print(getHumidity());
-  Serial.print(" % | Press: ");
-  Serial.print(getPressure());
-  Serial.print(" hPa | LightRaw: ");
+  Serial.print(" % | LightRaw: ");
   Serial.print(getLightRaw());
   Serial.print(" | Light: ");
   Serial.print(getLightPercent());

@@ -3,7 +3,9 @@
 #include "sensors.h"
 #include "actuators.h"
 
-static const float TEMP_THRESHOLD = 30.0;
+// Пороги
+static const float TEMP_ON = 30.0;
+static const float TEMP_OFF = 28.0;
 
 void setupControl() {
 }
@@ -11,9 +13,13 @@ void setupControl() {
 void updateControl() {
   float temp = getTemperature();
 
-  if (temp > TEMP_THRESHOLD) {
-    setRelay(true);   // ON
-  } else {
-    setRelay(false);  // OFF
+  // если сейчас ВЫКЛЮЧЕНО → проверяем включение
+  if (!isRelayOn() && temp > TEMP_ON) {
+    setRelay(true);
+  }
+
+  // если сейчас ВКЛЮЧЕНО → проверяем выключение
+  else if (isRelayOn() && temp < TEMP_OFF) {
+    setRelay(false);
   }
 }
