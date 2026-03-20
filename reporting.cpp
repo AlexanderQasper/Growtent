@@ -25,14 +25,12 @@ void reportState() {
 
   lastReportMs = now;
 
-  Serial.print("Temp: ");
+  Serial.print("TEMP=");
   Serial.print(getTemperature());
-  Serial.print(" C | Hum: ");
+  Serial.print(";HUM=");
   Serial.print(getHumidity());
-  Serial.print(" % | LightRaw: ");
-  Serial.print(getLightRaw());
-  Serial.print(" | Light: ");
+  Serial.print(";LIGHT=");
   Serial.print(getLightPercent());
-  Serial.print(" % | Relay: ");
-  Serial.println(isRelayOn() ? "ON" : "OFF");
+  Serial.print(";RELAY=");
+  Serial.println(isRelayOn() ? 1 : 0);
 }
